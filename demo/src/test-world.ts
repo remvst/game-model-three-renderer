@@ -1,14 +1,10 @@
-import { CameraTrait, Entity, World } from "@remvst/game-model";
+import { CameraTrait, Entity, SmoothTargetFollowingTrait, World } from "@remvst/game-model";
 import { Vector2 } from "@remvst/geometry";
 import { CharacterTrait } from "./character-trait";
 import { SpinningTrait } from "./spinning-trait";
 
 export function testWorld() {
     const world = new World();
-
-    const camera = new Entity(undefined, [new CameraTrait()]);
-    camera.position.z = 5;
-    world.entities.add(camera);
 
     world.entities.add(
         new Entity(undefined, [
@@ -25,11 +21,17 @@ export function testWorld() {
     );
 
     world.entities.add(
-        new Entity(undefined, [
+        new Entity('main', [
             new SpinningTrait(new Vector2(250, 150), 35, Math.PI * 2),
             new CharacterTrait(0xffff00),
         ]),
     );
+
+    const camera = new Entity(undefined, [new CameraTrait(), new SmoothTargetFollowingTrait()]);
+    camera.position.z = 300;
+    camera.traitOfType(SmoothTargetFollowingTrait).targetEntityIds = ['main'];
+    camera.traitOfType(SmoothTargetFollowingTrait).maxSpeed = 100;
+    world.entities.add(camera);
 
     return world;
 }

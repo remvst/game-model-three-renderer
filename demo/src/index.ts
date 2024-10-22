@@ -5,6 +5,7 @@ import { EmptyEventViewControllerFactory } from "../../lib/factory/empty-event-v
 import { TestEntityViewControllerFactory } from "./test-entity-view-controller-factory";
 import { testWorld } from "./test-world";
 import { CameraTrait } from "@remvst/game-model";
+import { factory } from "typescript";
 
 const world = testWorld();
 
@@ -25,11 +26,11 @@ const worldViewController = new WorldViewController({
     eventViewControllerFactory,
     layers: ["characters", "debug-foreground"],
 });
-worldViewController.view.scale.set(0.01, 0.01, 0.01);
 stage.add(worldViewController.view);
 worldViewController.start();
 
-const camera = new THREE.PerspectiveCamera(75, 800 / 600, 0.1, 1000);
+const cameraTarget = new THREE.Object3D();
+worldViewController.view.add(cameraTarget);
 
 let lastFrame = performance.now();
 let age = 0;
@@ -43,18 +44,10 @@ function frame() {
     world.cycle(elapsed);
     worldViewController.update(elapsed);
 
-    for (const cameraEntity of world.entities.bucket(CameraTrait.key)) {
-        camera.position.set(
-            cameraEntity.position.x * worldViewController.view.scale.x,
-            cameraEntity.position.y * worldViewController.view.scale.y,
-            cameraEntity.position.z * worldViewController.view.scale.z,
-        );
-        camera.lookAt(new THREE.Vector3(0, 0, 0));
-    }
-
-    camera.position.set(0, 0, 5);
-    camera.lookAt(new THREE.Vector3(0, 0, 0));
-    renderer.render(stage, camera);
+    renderer.render(
+        stage,
+        entityViewControllerFactory.cameraViewController.getOrCreateView(),
+    );
 
     requestAnimationFrame(frame);
 }

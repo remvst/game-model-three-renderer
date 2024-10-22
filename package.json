@@ -13,7 +13,7 @@
     },
     "peerDependencies": {
         "@remvst/animate.js": "^3.1.0",
-        "@remvst/game-model": "^4.20.0",
+        "@remvst/game-model": "^4.23.0",
         "@remvst/geometry": "^2.5.1",
         "@remvst/optimization": "^1.0.1",
         "three": "^0.169.0"
