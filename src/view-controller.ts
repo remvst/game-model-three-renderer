@@ -1,6 +1,5 @@
 import { InterpolationPool } from "@remvst/animate.js";
 import { CameraTrait } from "@remvst/game-model";
-import { Rectangle } from "@remvst/geometry";
 import { ReusablePool, ReusablePoolBindable } from "@remvst/optimization";
 import * as THREE from "three";
 import { WorldViewController } from "./world/world-view-controller";
@@ -22,7 +21,6 @@ export abstract class ViewController<
     protected lastUpdate: number = 0;
     private worldViewControllerAgeAtCreation: number = 0;
     protected visibleAge: number = 0;
-    readonly visibilityRectangle = new Rectangle(0, 0, 0, 0);
     protected lastVisible = 0;
     private timeouts: Timeout[] = [];
 
@@ -57,9 +55,7 @@ export abstract class ViewController<
     abstract get layerId(): string;
 
     isVisible(): boolean {
-        return this.visibilityRectangle.intersects(
-            this.camera.visibleRectangle,
-        );
+        return true;
     }
 
     hasView(): boolean {
@@ -91,19 +87,8 @@ export abstract class ViewController<
         }
     }
 
-    updateVisibilityRectangle() {
-        this.visibilityRectangle.centerAround(
-            0,
-            0,
-            Number.MAX_SAFE_INTEGER / 2,
-            Number.MAX_SAFE_INTEGER / 2,
-        );
-    }
-
     update() {
         const elapsed = this.age - this.lastUpdate;
-
-        this.updateVisibilityRectangle();
 
         if (!this.isVisible()) {
             this.visibleAge = 0;
