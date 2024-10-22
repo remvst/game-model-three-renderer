@@ -1,0 +1,27 @@
+{
+    "name": "@remvst/game-model-three-renderer",
+    "version": "1.0.0",
+    "author": "Rémi Vansteelandt",
+    "license": "UNLICENSED",
+    "main": "lib/index.js",
+    "scripts": {
+        "prettier:fix": "prettier . --write",
+        "prettier:check": "prettier . --check",
+        "build": "rm -rf lib && tsc",
+        "prepublishOnly": "npm i && npm run build",
+        "test": "npm run prettier:check && npm run build"
+    },
+    "peerDependencies": {
+        "@remvst/animate.js": "^3.1.0",
+        "@remvst/game-model": "^4.20.0",
+        "@remvst/geometry": "^2.5.1",
+        "@remvst/optimization": "^1.0.1",
+        "three": "^0.169.0"
+    },
+    "devDependencies": {
+        "@types/three": "^0.169.0",
+        "prettier": "^3.2.5",
+        "prettier-plugin-organize-imports": "^3.2.4",
+        "typescript": "^5.4.5"
+    }
+}
