@@ -25,9 +25,7 @@ export abstract class EventViewController<
     postBind() {}
 
     isVisible() {
-        return this.visibilityRectangle.intersects(
-            this.camera.visibleRectangle,
-        );
+        return true;
     }
 
     tearDown() {
