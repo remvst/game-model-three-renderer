@@ -11,11 +11,13 @@ export class CameraViewController extends EntityViewController<THREE.Perspective
 
     postBind(): void {
         super.postBind();
-        this.smoothTargetFollowingTrait = this.entity.traitOfType(SmoothTargetFollowingTrait);
+        this.smoothTargetFollowingTrait = this.entity.traitOfType(
+            SmoothTargetFollowingTrait,
+        );
     }
 
     protected createView(): THREE.PerspectiveCamera {
-        return new THREE.PerspectiveCamera(75, 800 / 600, 0.1, 1000)
+        return new THREE.PerspectiveCamera(75, 800 / 600, 0.1, 1000);
     }
 
     protected updateView(view: THREE.PerspectiveCamera, elapsed: number): void {

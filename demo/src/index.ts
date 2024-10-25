@@ -4,8 +4,6 @@ import * as THREE from "three";
 import { EmptyEventViewControllerFactory } from "../../lib/factory/empty-event-view-controller-factory";
 import { TestEntityViewControllerFactory } from "./test-entity-view-controller-factory";
 import { testWorld } from "./test-world";
-import { CameraTrait } from "@remvst/game-model";
-import { factory } from "typescript";
 
 const world = testWorld();
 
